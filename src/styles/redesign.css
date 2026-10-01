@@ -368,3 +368,11 @@ body:has(.adm) .wa-float { display: none; }
 .adm__stock { grid-column: span 2; }
 .adm__stock::before { grid-column: 1 / -1; }
 @media (min-width: 900px) { .adm__stock { grid-column: auto; } }
+
+/* ---------- Fotos reais: fundo branco ---------- */
+.card__media:has(img.product-img), .card--dark .card__media:has(img.product-img), .pd__media:has(img.product-img) { background: #fff; }
+.card__media:has(img.product-img)::before, .pd__media:has(img.product-img)::before { display: none; }
+img.product-img { filter: none !important; object-fit: contain; }
+.card__media img.product-img { width: 100%; height: 100%; }
+.pd__media img.product-img { width: 100%; height: 100%; }
+.search__thumb img, .cart__thumb img, .summary__thumb img { background: #fff; border-radius: inherit; }
