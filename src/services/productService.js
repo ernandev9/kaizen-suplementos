@@ -7,13 +7,13 @@ import { REPO } from '../config/store';
  * sem internet ou o GitHub falhar, usa a cópia que vem junto com o site.
  * Produtos com active === false não aparecem na loja.
  */
-const RAW = `https://raw.githubusercontent.com/${REPO.owner}/${REPO.name}/${REPO.branch}/${REPO.file}`;
+const LIVE = `https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}?ref=${REPO.branch}`;
 
 async function fetchLive() {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 4000);
   try {
-    const res = await fetch(`${RAW}?t=${Math.floor(Date.now() / 60000)}`, { signal: ctrl.signal });
+    const res = await fetch(LIVE, { signal: ctrl.signal, headers: { Accept: 'application/vnd.github.raw+json' } });
     if (!res.ok) return null;
     const data = await res.json();
     return Array.isArray(data) && data.length ? data : null;
