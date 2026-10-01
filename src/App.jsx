@@ -11,6 +11,7 @@ import Checkout from './components/Checkout';
 import OrderSuccess from './components/OrderSuccess';
 import Home from './pages/Home';
 import Products from './pages/Products';
+import Admin from './pages/Admin';
 
 function Page({ route }) {
   const { path } = route;
@@ -18,6 +19,7 @@ function Page({ route }) {
   if (path === '/ofertas') return <Products route={route} offers />;
   if (path.startsWith('/produto/')) return <ProductDetail slug={decodeURIComponent(path.slice(9))} />;
   if (path === '/checkout') return <Checkout />;
+  if (path === '/admin') return <Admin />;
   if (path === '/pedido') return <OrderSuccess />;
   return <Home />;
 }

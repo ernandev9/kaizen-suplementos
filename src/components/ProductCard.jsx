@@ -29,7 +29,7 @@ export default function ProductCard({ product, dark = false }) {
         <ProductImage product={product} />
       </a>
       <div className="card__body">
-        <span className="card__cat">{categoriesById[product.category]?.short} · {product.brand}</span>
+        <span className="card__cat">{[categoriesById[product.category]?.short, product.brand].filter(Boolean).join(' · ')}</span>
         <a href={`#/produto/${product.slug}`} className="card__name" onClick={(e) => { e.preventDefault(); open(); }}>
           {product.name}
         </a>

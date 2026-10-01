@@ -71,3 +71,11 @@ export const FAQ = [
   { q: 'Posso trocar ou devolver?', a: 'Sim. Produto com defeito, errado ou lacre violado é trocado. Fale com a gente pelo WhatsApp em até 7 dias após o recebimento.' },
   { q: 'Não sei qual suplemento escolher.', a: 'Chame no WhatsApp. Uma pessoa da equipe te ajuda a montar o pedido conforme seu objetivo e rotina de treino.' },
 ];
+
+// Repositório onde ficam os produtos (usado pela loja e pelo painel #/admin)
+export const REPO = {
+  owner: 'ernandev9',
+  name: 'kaizen-suplementos',
+  branch: 'main',
+  file: 'src/data/products.json',
+};

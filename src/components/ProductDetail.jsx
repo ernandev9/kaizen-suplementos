@@ -59,7 +59,7 @@ export default function ProductDetail({ slug }) {
         </div>
 
         <div className="pd__info">
-          <span className="pd__brand">{cat?.name} · {product.brand}{sizeOf(product) && <em>{sizeOf(product)}</em>}</span>
+          <span className="pd__brand">{[cat?.name, product.brand].filter(Boolean).join(' · ')}{sizeOf(product) && <em>{sizeOf(product)}</em>}</span>
           <h1 className="pd__name">{product.name}</h1>
           <Price product={product} large />
           <StockMeter stock={product.stock} />
@@ -102,7 +102,7 @@ export default function ProductDetail({ slug }) {
           {tab === 'uso' && <p>{cat?.usage}</p>}
           {tab === 'info' && (
             <dl>
-              <div><dt>Marca</dt><dd>{product.brand}</dd></div>
+              {product.brand && <div><dt>Marca</dt><dd>{product.brand}</dd></div>}
               <div><dt>Categoria</dt><dd>{cat?.name}</dd></div>
               {sizeOf(product) && <div><dt>Conteúdo</dt><dd>{sizeOf(product)}</dd></div>}
               <div><dt>Disponibilidade</dt><dd>{soldOut ? 'Esgotado' : product.stock <= 10 ? 'Últimas unidades' : 'Em estoque'}</dd></div>

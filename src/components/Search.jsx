@@ -62,7 +62,7 @@ export default function Search({ initial = '', autoFocus = false, onDone }) {
                   <span className="search__thumb"><ProductImage product={p} /></span>
                   <span className="search__info">
                     <span>{p.name}</span>
-                    <small>{p.brand}</small>
+                    <small>{p.brand || ''}</small>
                   </span>
                   <strong>{brl(p.price)}</strong>
                 </button>

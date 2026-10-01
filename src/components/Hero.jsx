@@ -6,9 +6,8 @@ import ProductImage from './ProductImage';
 
 export default function Hero() {
   const { products } = useStore();
-  const stage = ['whey-protein-concentrado-900g', 'creatina-monohidratada-300g', 'pre-treino-ignite-300g']
-    .map((slug) => products.find((p) => p.slug === slug))
-    .filter(Boolean);
+  const picks = products.filter((p) => p.featured && p.stock > 0).slice(0, 3);
+  const stage = picks.length === 3 ? [picks[1], picks[0], picks[2]] : picks;
   const from = products.filter((p) => p.stock > 0).reduce((m, p) => Math.min(m, p.price), Infinity);
 
   return (

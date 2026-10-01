@@ -1,21 +1,37 @@
-import { products as localProducts } from '../data/products';
+import bundled from '../data/products.json';
+import { REPO } from '../config/store';
 
 /**
  * Camada de acesso aos produtos.
- * Hoje lê de src/data/products.js. Para usar um banco (Supabase, Firebase, API própria),
- * troque apenas o conteúdo destas funções — o resto do site não precisa mudar.
- *
- * Exemplo com Supabase:
- *   const { data } = await supabase.from('products').select('*').eq('active', true);
- *   return data;
+ * Lê o arquivo publicado no GitHub (atualizado pelo painel em #/admin) e, se estiver
+ * sem internet ou o GitHub falhar, usa a cópia que vem junto com o site.
+ * Produtos com active === false não aparecem na loja.
  */
+const RAW = `https://raw.githubusercontent.com/${REPO.owner}/${REPO.name}/${REPO.branch}/${REPO.file}`;
+
+async function fetchLive() {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 4000);
+  try {
+    const res = await fetch(`${RAW}?t=${Math.floor(Date.now() / 60000)}`, { signal: ctrl.signal });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return Array.isArray(data) && data.length ? data : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function fetchProducts() {
-  return localProducts.map((p) => ({ ...p }));
+  const list = (await fetchLive()) || bundled;
+  return list.filter((p) => p.active !== false).map((p) => ({ ...p }));
 }
 
 /**
  * Baixa o estoque após um pedido.
- * Com banco de dados, faça isso no servidor (função/RPC) para evitar vender além do estoque.
+ * Hoje a baixa vale só para a sessão do cliente; o estoque real é ajustado no painel #/admin.
  */
 export async function reserveStock(items) {
   return { ok: true, items };

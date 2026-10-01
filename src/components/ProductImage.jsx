@@ -59,7 +59,7 @@ function Packaging({ product, uid }) {
       <rect x={x} y={y} width={w} height="3" fill="#C9EE3F" />
       <path d={`M${x} ${y + h}h${w}v-6l-${w * 0.28} 6z`} fill="#C9EE3F" opacity="0" />
       <text x={x + w / 2} y={y + 17} textAnchor="middle" fontFamily={FONT} fontSize="6.5" fontWeight="700" letterSpacing="1.6" fill="#C9EE3F">
-        {brand.toUpperCase()}
+        {(brand || '').toUpperCase()}
       </text>
       <text x={x + w / 2} y={y + h / 2 + 10} textAnchor="middle" fontFamily={FONT} fontStyle="italic" fontWeight="900" fontSize={big} fill="#fff" textLength={Math.min(w - 16, label.length * big * 0.8)} lengthAdjust="spacingAndGlyphs">
         {label}
@@ -83,6 +83,19 @@ function Packaging({ product, uid }) {
         <path d="M62 34h76" stroke="#fff" strokeOpacity=".3" strokeWidth="1.5" />
         <rect x="53" y="46" width="94" height="124" fill={gloss} />
         <Label x={62} y={84} w={76} h={64} />
+      </g>
+    );
+  }
+  if (shape === 'barra') {
+    return (
+      <g transform="rotate(-14 100 100)">
+        {defs}
+        <rect x="34" y="72" width="132" height="52" rx="6" fill={body} />
+        <rect x="34" y="72" width="132" height="52" rx="6" fill={gloss} />
+        <path d="M34 78l-6 4v36l6 4M166 78l6 4v36l-6 4" stroke={c0} strokeWidth="3" fill="none" />
+        <rect x="34" y="88" width="132" height="20" fill="#0d120f" />
+        <rect x="34" y="88" width="132" height="2.5" fill="#C9EE3F" />
+        <text x="100" y="103" textAnchor="middle" fontFamily={FONT} fontStyle="italic" fontWeight="900" fontSize="13" fill="#fff">{(brand || label).toUpperCase().slice(0, 14)}</text>
       </g>
     );
   }
